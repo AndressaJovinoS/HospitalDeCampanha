@@ -31,7 +31,6 @@ namespace HospitalDeCampanha
                 Tail = aux;
             }
             Console.WriteLine("Elemento Inserido com sucesso!!!");
-
         }
 
         public void Pop()

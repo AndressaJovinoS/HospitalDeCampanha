@@ -67,10 +67,18 @@ namespace HospitalDeCampanha
                             RealizarAlta(LInternacao);
                             break;
                         case 6:
-                            Console.WriteLine("Arquvios:\n1- Assintomatico\n2- Sintomatico\n3- Negativo\n>>>");
-                            int op2;
+                            Console.WriteLine("Arquvios:\n1- Assintomatico\n2- Sintomatico\n3- Negativo\n>>>\n 0 - Sair");
+                            int op2 = -1;
                             do
                             {
+								try
+								{
+                                    op2 = int.Parse(Console.ReadLine());
+								}
+								catch (Exception)
+								{
+                                    Console.WriteLine("Digite um numero de acordo com o MENU de arquivos");
+                                }
                                 if (int.TryParse(Console.ReadLine(), out op2))
 
                                     if (op2 == 1)
@@ -85,9 +93,12 @@ namespace HospitalDeCampanha
                                     {
                                         ImprimeCSV("Arquivo Negativos", "\nNegativo");
                                     }
-                                if (op != 3 || op != 2 || op != 1) Console.WriteLine("Digite um numero valido");
+									else if (op2 == 4)
+									{
+                                        ImprimeCSV("Arquivo Leitos", "\nLeitos");
+									}
                             }
-                            while (op != 3 || op != 2 || op != 1);
+                            while (op2 != 0);
                             break;
                         case 7:
                             break;
@@ -112,9 +123,11 @@ namespace HospitalDeCampanha
                 if (int.TryParse(Console.ReadLine(), out tipoAtendimento))
                 {
                     controle = true;
-                    if (tipoAtendimento < 1 || tipoAtendimento > 2) Console.Write("\nInforme um numero valido do menu!!!\n");
+                    if (tipoAtendimento < 1 || tipoAtendimento > 2) 
+                        Console.Write("\nInforme um numero valido do menu!!!\n");
                 }
-
+				else
+					Console.WriteLine("Informe um número válido!");
             }
             while (controle == false || (tipoAtendimento < 1 || tipoAtendimento > 2));
 
@@ -173,7 +186,7 @@ namespace HospitalDeCampanha
                 Console.ReadKey();
             }
             else
-                Console.WriteLine("As filas de espera estam vazias!");
+                Console.WriteLine("As filas de espera estao vazias!");
         }
 
         static public int ChamarSenha(FilaSenha fc, FilaSenha fp, ref int count)
@@ -272,6 +285,22 @@ namespace HospitalDeCampanha
                         LInternacao.Leitos[numeroLeito] = FSintomatico.Head;
                         FSintomatico.Pop();
 
+                        int numEspaco = 0;
+                        for (int i = 0; i < LInternacao.Leitos.Length; i++)
+                        {
+                            if (LInternacao.Leitos[i] != null) numEspaco++;
+                        }
+                        Pessoa[] vet = new Pessoa[numEspaco];
+                        int j = 0;
+                        for (int i = 0; i < LInternacao.Leitos.Length; i++)
+                        {
+                            if (LInternacao.Leitos[i] != null)
+                            {
+                                vet[j] = LInternacao.Leitos[i];
+                                j++;
+                            }
+                        }
+                        WriteFileCSV(null, vet, "Leitos", "Arquivo Leitos");
 
                         Console.WriteLine("\n>>>>>FILA DE INTERNAÇÃO");
                         FSintomatico.Print();

@@ -29,8 +29,6 @@ namespace HospitalDeCampanha
 				}
 				pessoa.Idade = ConverteIdade(pessoa.DataNascimento);
 
-
-
 			}
 			while (pessoa.Idade < 0 || teste == false);
 
@@ -65,7 +63,6 @@ namespace HospitalDeCampanha
 			}
 			while (comorbidade.ToLower() != "s" && comorbidade.ToLower() != "n");
 			return pessoa;
-
 		}
 
 		static public int Exame()
@@ -89,7 +86,6 @@ namespace HospitalDeCampanha
 				return 2;
 			else
 				return 3;
-
 		}
 
 		static public int ConverteIdade(DateTime DataNascimento)
